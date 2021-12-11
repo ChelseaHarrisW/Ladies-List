@@ -4,7 +4,7 @@ import './index.css';
 import { List } from "./components/List";
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-ReactDOM.render((
+ReactDOM.render(
   <React.StrictMode>
    
     <BrowserRouter>
@@ -12,6 +12,6 @@ ReactDOM.render((
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
-));
+);
 
 reportWebVitals();

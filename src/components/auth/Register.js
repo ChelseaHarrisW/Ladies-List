@@ -1,90 +1,76 @@
-import React, { useState } from "react"
-import { Navigate } from "react-router-dom";
-import useSimpleAuth from "../hooks/UseAPIAuth"
+import React, { useRef, useState } from "react"
+import { useHistory  } from "react-router-dom"
 import "./Login.css"
 
-export const Register = () => {
-    const [credentials, syncAuth] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        employee: false
-    })
-    const { register } = useSimpleAuth()
-    const history = Navigate()
+export const Register = (props) => {
+    const [customer, setCustomer] = useState({})
+    const conflictDialog = useRef()
 
+    const history = useHistory ()
+
+    const existingUserCheck = () => {
+        return fetch(`http://localhost:8788/Users?email=${customer.email}`)
+            .then(res => res.json())
+            .then(user => !!user.length)
+    }
     const handleRegister = (e) => {
         e.preventDefault()
-
-        const newUser = {
-            name: `${credentials.firstName} ${credentials.lastName}`,
-            email: credentials.email,
-            employee: credentials.employee
-        }
-
-        register(newUser).then(() => {
-            history.push("/")
-        })
+        existingUserCheck()
+            .then((userExists) => {
+                if (!userExists) {
+                    fetch("http://localhost:8788/Users", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(customer)
+                    })
+                        .then(res => res.json())
+                        .then(createdUser => {
+                            if (createdUser.hasOwnProperty("id")) {
+                                localStorage.setItem("Lady_User", createdUser.id)
+                                history.push("/")
+                            }
+                        })
+                }
+                else {
+                    conflictDialog.current.showModal()
+                }
+            })
     }
 
-    const handleUserInput = (event) => {
-        const copy = {...credentials}
-        copy[event.target.id] = event.target.value
-        syncAuth(copy)
+    const updateCustomer = (evt) => {
+        const copy = {...customer}
+        copy[evt.target.id] = evt.target.value
+        setCustomer(copy)
     }
 
 
     return (
         <main style={{ textAlign: "center" }}>
-            <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Please Register for NSS Kennels</h1>
-                <fieldset>
-                    <label htmlFor="firstName"> First Name </label>
-                    <input type="text" onChange={handleUserInput}
-                        id="firstName"
-                        className="form-control"
-                        placeholder="First name"
-                        required autoFocus />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="lastName"> Last Name </label>
-                    <input type="text" onChange={handleUserInput}
-                        id="lastName"
-                        className="form-control"
-                        placeholder="Last name"
-                        required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputEmail"> Email address </label>
-                    <input type="email" onChange={handleUserInput}
-                        id="email"
-                        className="form-control"
-                        placeholder="Email address"
-                        required />
-                </fieldset>
-                <fieldset>
-                    <input
-                        onChange={
-                            (event) => {
-                                const copy = { ...credentials }
-                                if (event.target.value === "on") {
-                                    copy.employee = true
-                                }
-                                else {
-                                    copy.employee = false
-                                }
-                                syncAuth(copy)
-                            }
-                        }
-                        defaultChecked={credentials.employee}
-                        type="checkbox" name="employee" id="employee" />
-                    <label htmlFor="employee"> Employee account? </label>
-                </fieldset>
+            <dialog className="dialog dialog--password" ref={conflictDialog}>
+                <div>Account with that email address already exists</div>
+                <button className="button--close" onClick={e => conflictDialog.current.close()}>Close</button>
+            </dialog>
 
+            <form className="form--login" onSubmit={handleRegister}>
+                <h1 className="h3 mb-3 font-weight-normal">Please Register for Ladies List</h1>
                 <fieldset>
-                    <button type="submit">
-                        Sign in
-                    </button>
+                    <label htmlFor="name"> Full Name </label>
+                    <input onChange={updateCustomer}
+                           type="text" id="name" className="form-control"
+                           placeholder="Enter your name" required autoFocus />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="address"> Address </label>
+                    <input onChange={updateCustomer} type="text" id="address" className="form-control" placeholder="Street address" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="email"> Email address </label>
+                    <input onChange={updateCustomer} type="email" id="email" className="form-control" placeholder="Email address" required />
+                </fieldset>
+                <fieldset>
+                    <button type="submit"> Register </button>
                 </fieldset>
             </form>
         </main>
