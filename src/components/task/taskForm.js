@@ -34,7 +34,7 @@ export const TaskForm = () => {
         setTask(Task); //updating the state
       });
   };
-  console.log(5)
+  console.log(5);
   //below we are using useEffect to to filter down the Task.length to display the updateMessages function to render the coresponding messages below only if the criteria is true.
   // button below is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
   return (
@@ -49,9 +49,8 @@ export const TaskForm = () => {
         return (
           <div key={`task--${Task?.id}`}>
             <p className={Task.instructions ? "Instructions required" : "Task"}>
-             
-               <Link to={`/task/${Task?.task}`}> {Task?.task} </Link> New Task to
-               complete submitted by {Task?.user?.name}
+              <Link to={`/task/${Task?.task}`}> {Task?.task} </Link> New Task to
+              complete submitted by {Task?.user?.name}
               <div>
                 {" "}
                 <button
