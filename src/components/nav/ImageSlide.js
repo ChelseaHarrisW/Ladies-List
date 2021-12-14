@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ImageData } from './ImageData';
+
+
+const ImageSlider = () => {
+    const [current, setCurrent] = useState(0)
+    //const length = slides.length
+
+
+}
 
 export const ImageSlide = () => {
     return (
+        <>
         <div>
             {ImageData.map((slide, index) => { 
                return (
@@ -10,5 +19,6 @@ export const ImageSlide = () => {
                )
             })}
         </div>
+        </>
     )
 }

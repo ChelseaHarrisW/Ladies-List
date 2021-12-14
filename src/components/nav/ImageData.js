@@ -1,4 +1,4 @@
-export const ImageData = [
+export const ImageData =[
     {
         image: 'https://i.pinimg.com/564x/36/28/64/36286419480fc9a6b7f70201d0091b54.jpg'
     },
