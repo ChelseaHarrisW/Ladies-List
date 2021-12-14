@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
-// above importing declarations that will allow me to manage state throuought the module using the react library
 
-// the initial null value is serving as the transient state this function below is returning all the JSX or HTML
+// Task Delete button,, and create
 
 export const TaskForm = () => {
   const [Task, setTask] = useState([]); // called destructuring value 1. rep of state value 2. sets the state
@@ -34,7 +33,6 @@ export const TaskForm = () => {
         setTask(Task); //updating the state
       });
   };
-  console.log(5);
   //below we are using useEffect to to filter down the Task.length to display the updateMessages function to render the coresponding messages below only if the criteria is true.
   // button below is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
   return (
@@ -49,6 +47,7 @@ export const TaskForm = () => {
         return (
           <div key={`task--${Task?.id}`}>
             <p className={Task.instructions ? "Instructions required" : "Task"}>
+ 
               <Link to={`/task/${Task?.task}`}> {Task?.task} </Link> New Task to
               complete submitted by {Task?.user?.name}
               <div>
@@ -58,7 +57,7 @@ export const TaskForm = () => {
                     deleteTask(Task?.id);
                   }}
                 >
-                  Complete
+                  Complete My Task
                 </button>{" "}
               </div>
             </p>

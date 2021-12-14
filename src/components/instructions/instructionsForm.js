@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-// above importing declarations that will allow me to manage state throuought the module using the react library
-
-// the initial null value is serving as the transient state this function below is returning all the JSX or HTML
+//instruction delete button, and create
 
 export const InstructionsForm = () => {
   const [instructions, setInstructions] = useState([]); // called destructuring value 1. rep of state value 2. sets the state
@@ -15,36 +13,28 @@ export const InstructionsForm = () => {
   // we are using useEffect here to store the serviceTicket that  we have fetched from the server (denoted with the /Instructions link) in the Instructions array once the promice is complete.
   // then storing it on the null value below.
 
-//   useEffect(() => {
-//     fetch("http://localhost:8788/instructions?_expand=task") //used qwery string parameter to specify
-//       .then((res) => res.json())
-//       .then((Instructions) => {
-//         setInstructions(Instructions);
-//       });
-//   }, []);
 
 useEffect(() => {
-    fetch("http://localhost:8788/instructions?_expand=task") //used qwery string parameter to specify
+    fetch("http://localhost:8788/instructions") //used qwery string parameter to specify
       .then((res) => res.json()) // converting to JSON
       .then((instructions) => {
         //converting from JSON to Javascript
-        console.log(instructions)
-        setInstructions([instructions]); //updating the state
+       
+        setInstructions(instructions); //updating the state
       });
   }, []);
   const deleteInstruction = (id) => {
     fetch(`http://localhost:8788/instructions/${id}`, {
       method: "DELETE",
     })
-      .then(() => fetch("http://localhost:8788/instructions?_expand=task")) //used qwery string parameter to specify
+      .then(() => fetch("http://localhost:8788/instructions")) //used qwery string parameter to specify
       .then((res) => res.json()) // converting to JSON
       .then((instructions) => {
         //converting from JSON to Javascript
-        setInstructions([instructions]);
+        setInstructions(instructions);
          //updating the state
       });
   };
-  console.log(instructions)
   //below we are using useEffect to to filter down the Instructions.length to display the updateMessages function to render the coresponding messages below only if the criteria is true.
   // button below is here to avid issues with mapping and to place button at the begining of where the info renders to the DOM */}
   return (
@@ -56,7 +46,16 @@ useEffect(() => {
       </div>
       {instructions.map((instruction) => {
         //  if you put the button in the map you get buttons for all map items
-        return <div key={`instructions--${instruction?.id}`}> {instruction.instructions}</div>;
+        return <div key={`instructions--${instruction?.id}`}> {instruction.instructions}
+  
+        <button
+          onClick={() => {
+            deleteInstruction(instruction?.id);
+          }}
+        >
+          Complete
+        </button>{" "}
+      </div>
       })}
     </>
   );

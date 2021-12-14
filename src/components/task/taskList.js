@@ -13,22 +13,13 @@ export const TaskList = () => {
     },
     [TaskId] // Above function runs when the value of TaskId change
   );
-  const deleteTask = (id) => {
-    fetch(`http://localhost:8788/tasks/${id}`, {
-      method: "DELETE",
-    });
-  };
+
   return (
     <>
       <h2>Task {TaskId} Details</h2>
-      <section className="ticket">
-        <h3 className="ticket__description">{Task?.task}</h3>
+      <section className="task">
+        <h3 className="task__description">{Task?.task}</h3>
         <div className="user_task">Submitted by {Task?.User?.name}</div>
-
-        {/* 
-               <button onClick={() => {
-    deleteTask(tasks.id)
-}}>Delete</button> */}
       </section>
     </>
   );

@@ -13,6 +13,7 @@ export const TaskInputFormForm = () => {
   // state vs set... puttin more items in the box
   // the state here will return the info dedired obove ie a string or a boolean refer to the use state obj above
   const history = useHistory();
+  //const{instructions, setInstructions}
 
   const saveTask = (SubmitTaskClicked) => {
     SubmitTaskClicked.preventDefault();
@@ -59,13 +60,15 @@ export const TaskInputFormForm = () => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="name">instructions:</label>
+          <label htmlFor="name">Instructions:</label>
           <input
             type="checkbox"
             onChange={(evt) => {
               const copy = { ...task };
               copy.instructions = evt.target.checked;
+              
               update(copy); // needed to track the updated copies (changes in state)
+              //const instru
             }}
             type="checkbox"
           />

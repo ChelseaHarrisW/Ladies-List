@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export const InstructionsList = () => {
-  const [Instructions, setInstructions] = useState({}); // State variable for current ticket object
-  const { InstructionsId } = useParams(); // Variable storing the route parameter
+export const InstructionList = () => {
+  const [Instruction, setInstruction] = useState([]); // State variable for current ticket object
+  const { InstructionId } = useParams(); // Variable storing the route parameter
 
   useEffect(
     () => {
-      fetch(`http://localhost:8788/instructions?${InstructionsId}`)
+      fetch(`http://localhost:8788/instructions?_expand=task&_expand=user`)
         .then((res) => res.json())
-        .then(setInstructions);
+        .then(setInstruction);
     },
-    [InstructionsId] // Above function runs when the value of InstructionsId change
+    [] // Above function runs when the value of InstructionId change
   );
-
   return (
     <>
-      <h2>Instruction {InstructionsId} Details</h2>
-      <section className="instructions">
-        <h3 className="instructions__description">
-          {Instructions?.instruction}
-        </h3>
+      <h2>Instruction {InstructionId} Details</h2>
+      <section className="instruction">
+        {Instruction.map((Instruction) => {
+          // declaring instructionObj and returning the statement below.
+          return (
+            <>
+              <p key={`specialty--${Instruction.id}`}>
+                {Instruction.instructions}
+              </p>
+            </>
+          );
+        })}
       </section>
     </>
   );

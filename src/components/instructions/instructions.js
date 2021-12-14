@@ -7,8 +7,7 @@ export const InstructionsInputForm = () => {
   const [instructions, setInstruction] = useState({
     // update is the setter fx, it will be how we update the instructions  info to API
     instructions: "",
-    taskId: 1
-    
+  
   });
   // the varibles above are both representing transient state that have 2 different respondsibilities. the "instructions" state will store user input whereas the update state take changes made by user to put them in transient state to add back to instructions
   // state vs set... puttin more items in the box
@@ -31,7 +30,10 @@ export const InstructionsInputForm = () => {
       },
       body: JSON.stringify(submitInstructions),
     };
-    return fetch("http://localhost:8788/instructions?_expand=user", fetchOption).then(() => {
+    return fetch(
+      "http://localhost:8788/instructions?_expand=task&_expand=user",
+      fetchOption
+    ).then(() => {
       history.push("/instructions");
     });
   };
@@ -51,9 +53,9 @@ export const InstructionsInputForm = () => {
             className="form-control"
             placeholder="What is your plan to take the day? "
             onChange={(evt) => {
-              const copy = {... instructions};
+              const copy = { ...instructions };
               copy.instructions = evt.target.value;
-              setInstruction((copy));
+              setInstruction(copy);
             }}
           />
         </div>
