@@ -8,7 +8,7 @@ export const NavBar = (props) => {
     <ul className="navbar">
       <li className="navbar__item active">
         <Link className="navbar__link" to="/User">
-          Welcome User
+          Welcome Home
         </Link>
       </li>
       <li className="navbar__item active">

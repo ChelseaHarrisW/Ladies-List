@@ -51,7 +51,7 @@ export const InstructionsInputForm = () => {
             autoFocus
             type="text area"
             className="form-control"
-            placeholder="What is your plan to take the day? "
+            placeholder="What is your plan to take the day? 1. 2. 3. "
             onChange={(evt) => {
               const copy = { ...instructions };
               copy.instructions = evt.target.value;
