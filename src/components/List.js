@@ -10,6 +10,7 @@ import { NavBar } from "./nav/NavBar";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
 import "./List.css";
+import { UsersList } from "./Users/userHome";
 
 export const List = () => (
   <>
@@ -21,7 +22,9 @@ export const List = () => (
               <h1> Ladies List- Ladies Edition</h1>
               <NavBar />
               <ApplicationViews />
+              
             </>
+          
           );
         } else {
           return <Redirect to="/login" />;

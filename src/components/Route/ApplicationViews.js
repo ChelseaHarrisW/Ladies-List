@@ -14,7 +14,7 @@ import { UsersList } from "../Users/userHome";
 export const ApplicationViews = () => {
   return (
     <>
-      <Route exact path="/user">
+      <Route exact path="/">
         <UsersList />
       </Route>
       <Route exact path="/task">
