@@ -15,26 +15,7 @@ export const TaskList = () => {
     [TaskId] // Above function runs when the value of TaskId change
   );
 
-  const CompleteTask = (id) => {
-    const comleteTaskObj ={
-    userId: parseInt(localStorage.getItem("Lady_User")),
-    intention: Task.intention,
-    outcome: Task.outcome,
-    task: Task.task,
-    instruction: Task.instructions,
-    compleated: true,}
 
-    fetch(`http://localhost:8788/task/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(EditTask)
-    })
-      .then(() => {
-        history.push("/task")
-      })
-  }
 
 
   return (
