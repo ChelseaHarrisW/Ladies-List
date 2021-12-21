@@ -94,7 +94,7 @@ export const TaskForm = () => {
                           CompleteTask(Task);
                         }}
                       >
-                        compleate Task
+                        Complete Task
                       </button>{" "}
                     </div>
                   </p>
